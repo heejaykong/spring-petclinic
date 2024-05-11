@@ -15,13 +15,6 @@
  */
 package org.springframework.samples.petclinic.owner;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.core.style.ToStringCreator;
-import org.springframework.samples.petclinic.model.Person;
-import org.springframework.util.Assert;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +25,12 @@ import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.core.style.ToStringCreator;
+import org.springframework.samples.petclinic.model.Person;
+import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Simple JavaBean domain object representing an owner.
@@ -58,6 +57,8 @@ public class Owner extends Person {
 	@NotBlank
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
+
+	private Integer age;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "owner_id")
@@ -88,6 +89,14 @@ public class Owner extends Person {
 		this.telephone = telephone;
 	}
 
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
 	public List<Pet> getPets() {
 		return this.pets;
 	}
@@ -100,6 +109,7 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
+	 *
 	 * @param name to test
 	 * @return a pet if pet name is already in use
 	 */
@@ -109,6 +119,7 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given id, or null if none found for this Owner.
+	 *
 	 * @param id to test
 	 * @return a pet if pet id is already in use
 	 */
@@ -126,6 +137,7 @@ public class Owner extends Person {
 
 	/**
 	 * Return the Pet with the given name, or null if none found for this Owner.
+	 *
 	 * @param name to test
 	 * @return a pet if pet name is already in use
 	 */
@@ -156,6 +168,7 @@ public class Owner extends Person {
 
 	/**
 	 * Adds the given {@link Visit} to the {@link Pet} with the given identifier.
+	 *
 	 * @param petId the identifier of the {@link Pet}, must not be {@literal null}.
 	 * @param visit the visit to add, must not be {@literal null}.
 	 */
@@ -170,5 +183,4 @@ public class Owner extends Person {
 
 		pet.addVisit(visit);
 	}
-
 }
